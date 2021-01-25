@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1 layout:fragment="header">Catálogo de forrageiras<small>Website criado para gerar um catálogo com informações mínimas sobre essas plantas</small></h1>
-	<div layout:fragment="content" class="container">
-	 <div class="jumbotron">
-		<a th:href="@{/forrageiras/}" class="btn btn-lg btn-info">Começar</a>
-	 </div>
+	<div layout:fragment="content"
+		class="container-fluid d-flex flex-column justify-content-center align-items-center background-index index">
+		<h1>Catálogo de forrageiras</h1>
+		<h6>Website criado para gerar um catálogo com informações mínimas
+			sobre essas plantas</h6>
+		<div class="jumbotron mt-4">
+			<a th:href="@{/forrageiras/}" class="btn btn-dark btn-lg border-white">Começar</a>
+		</div>
 	</div>
 </body>
 </html>

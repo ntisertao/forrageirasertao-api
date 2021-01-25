@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1 layout:fragment="header">
+		Cadastro de forrageira<small>Este formulário precisa ser
+			preenchido por completo e com informações corretas, em caso de
+			informação errada ou erro no cadastro, por favor, entrar em contato
+			através do e-mail: zeduardu@academico.ufs.br</small>
+	</h1>
+	<div layout:fragment="content" class="container">
+		<div>
+			<form class="row g-3" id="forrageiraForm" th:action="@{/forrageiras/(form)}" th:object="${forrageira}" action="#" method="post">
+				<input type="hidden" id="inputId" th:field="*{id}">
+				<div class="col-md-4">
+					<label for="inputNomeCientifico" class="form-label">Nome científico</label>
+					<input type="text" id="inputNomeCientifico" th:field="*{nomeCientifico}" th:class="${#fields.hasErrors('nomeCientifico')} ? 'form-control is-invalid' : 'form-control'">
+					<div th:class="${#fields.hasErrors('nomeCientifico')} ? 'invalid-feedback'" th:errors="*{nomeCientifico}"></div>
+				</div>
+				<div class="col-md-4">
+					<label for="inputNomeComum" class="form-label">Nome Comum</label>
+					<input type="text" class="form-control" id="inputNomeComum" th:field="*{nomeComum}" th:class="${#fields.hasErrors('nomeComum')} ? 'form-control is-invalid' : 'form-control'">
+					<div th:class="${#fields.hasErrors('nomeCientifico')} ? 'invalid-feedback'" th:errors="*{nomeComum}"></div>
+				</div>
+				<div class="col-md-4">
+					<label for="inputGenero" class="form-label">Gênero</label>
+					<input type="text" class="form-control" id="inputGenero" th:field="*{genero}" th:class="${#fields.hasErrors('genero')} ? 'form-control is-invalid' : 'form-control'">
+					<div th:class="${#fields.hasErrors('nomeCientifico')} ? 'invalid-feedback'" th:errors="*{genero}"></div>
+				</div>
+				<div class="col-md-4">
+					<label for="inputOrigem" class="form-label">Origem</label> 
+					<input type="text" class="form-control" id="inputOrigem" th:field="*{origem}" th:class="${#fields.hasErrors('origem')} ? 'form-control is-invalid' : 'form-control'">
+					<div th:class="${#fields.hasErrors('nomeCientifico')} ? 'invalid-feedback'" th:errors="*{origem}"></div>
+				</div>
+				<div class="col-md-4">
+					<label for="inputFertilidade" class="form-label">Exigência de fertilidade:</label>
+					<select id="inputFertilidade" class="form-select" th:field="*{exigenciaFertilidade}">
+						<option th:value="1" th:text="Alta"></option>
+						<option th:value="2" th:text="Média"></option>
+						<option th:value="3" th:text="Baixa"></option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="inputPrecipitacao" class="form-label">Precipitição mínima (mm)</label>
+					<input type="text" id="inputPrecipitacao" th:field="*{precipiticaoMinima}" th:class="${#fields.hasErrors('precipiticaoMinima')} ? 'form-control is-invalid' : 'form-control'">
+					<div th:class="${#fields.hasErrors('nomeCientifico')} ? 'invalid-feedback'" th:errors="*{precipiticaoMinima}"></div>
+				</div>
+				<div class="col-md-4">
+					<label for="inputAlagamento" class="form-label">Tolerância ao alagamento:</label>
+					<select id="inputAlagamento" class="form-select" th:field="*{toleranciaAlagamento}">
+						<option th:value="1" th:text="Sim"></option>
+						<option th:value="0" th:text="Não"></option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="inputToleranciaSeca" class="form-label">Tolerância a seca:</label>
+					<select id="inputToleranciaSeca" class="form-select" th:field="*{toleranciaSeca}">
+						<option th:value="1" th:text="Alta"></option>
+						<option th:value="2" th:text="Média"></option>
+						<option th:value="3" th:text="Baixa"></option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="inputToleranciaFrio" class="form-label">Tolerância ao frio:</label>
+					<select id="inputToleranciaFrio" class="form-select" th:field="*{toleranciaFrio}">
+						<option th:value="1" th:text="Alta"></option>
+						<option th:value="2" th:text="Média"></option>
+						<option th:value="3" th:text="Baixa"></option>
+					</select>
+				</div>				
+				<div class="col-12">
+					<button type="submit" class="btn btn-primary" th:text="${isEdit} ? 'Atualizar' : 'Cadastrar'"></button>
+				</div>
+			</form>
+		</div>
+		<table class="table table-striped mt-4">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Nome científico</th>
+					<th scope="col" class="text-center">Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${forrageiras.empty}">
+					<td colspan="3">Sem forrageiras</td>
+				</tr>
+				<tr th:each="forrageira : ${forrageiras}">
+					<td th:text="${forrageira.id}">1</td>
+					<td th:text="${forrageira.nomeCientifico}">nomeCientifico</td>
+					<td class="d-flex justify-content-center">
+						<a th:href="@{'/forrageiras/e/'+${forrageira.id}}" class="btn btn-warning" role="button">Alterar</a>
+						<a th:href="@{'/forrageiras/d/'+${forrageira.id}}" class="btn btn-danger ms-1" role="button">Remover</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
